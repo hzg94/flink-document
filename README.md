@@ -1,4 +1,4 @@
-# Flink SQL
+# Flink SQL API
 
 # Connector 
 
@@ -214,7 +214,7 @@ WATERMARK FOR time_ltz AS time_ltz - INTERVAL '5' SECOND
 
 # Select
 
-## !!! WINDOW
+## !!! WINDOW 窗口
 
 ### TUMBLE 滚动窗口
 
@@ -251,6 +251,26 @@ select * from TABLE(
     )
 )
 ```
+
+实际使用:
+
+```scala
+// 实际使用中加上window_start, window_end 
+envTable.sqlQuery(
+   """
+    |select `window_start`,`window_end`,`UserId` from TABLE(
+    |   TUMBLE (
+    |       TABLE add,
+    |       DESCRIPTOR(`TimeStamp`),
+    |       INTERVAL '10' MINUTES      
+    |   )
+    |)
+    |where action = 'pv'
+    |GROUP BY `window_start`, `window_end`,`UserId`
+    |""".stripMargin).limit(1)
+```
+
+
 
 ### HOP 滑动窗口
 
@@ -292,7 +312,7 @@ select * from TABLE(
 )
 ```
 
-# Flink Table
+# Flink Table API
 
 ## Operations
 
