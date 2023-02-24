@@ -39,11 +39,19 @@ WATERMARK FOR time_ltz AS time_ltz - INTERVAL '5' SECOND
 
 发出到目前为止已观察到的最大时间戳减 1 的 watermark ，时间戳大于或等于最大时间戳的行被认为没有迟到。
 
-### Select
+### Query 查询 
 
 ------
 
-##### WINDOW 窗口
+#### DISTINCT 去重
+
+------
+
+```sql
+SELECT DISTINCT id FROM Orders
+```
+
+#### WINDOW 窗口
 
 ------
 
@@ -144,6 +152,22 @@ select * from TABLE(
        )
 )
 ```
+
+### create 创建
+
+------
+
+#### TABLE 表
+
+------
+
+行
+
+### insert 插入
+
+
+
+
 
 ## Flink Table API
 
@@ -443,7 +467,11 @@ pom.xml
 
 - `exactly-once ` 精确一次
 
-##### as:
+  
+
+### 案例
+
+------
 
 ```scala
 envTable.executeSql(      
